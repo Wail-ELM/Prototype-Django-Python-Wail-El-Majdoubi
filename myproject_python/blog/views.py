@@ -3,9 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .models import Article
 from .forms import ArticleForm, CustomUserCreationForm
-def article_list(request):
+
+def all_articles(request):  
     articles = Article.objects.all()
-    return render(request, 'blog/article_list.html', {'articles': articles})
+    return render(request, 'blog/all_articles.html', {'articles': articles})
+
+@login_required
+def my_articles(request):  
+    articles = Article.objects.filter(author=request.user)
+    return render(request, 'blog/my_articles.html', {'articles': articles})
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
@@ -41,7 +47,7 @@ def delete_article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     if request.method == 'POST':
         article.delete()
-        return redirect('article_list')
+        return redirect('article_list')  
     return render(request, 'blog/delete_article.html', {'article': article})
 
 def signup(request):
@@ -49,10 +55,8 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, 
- user)
-            return redirect('article_list') 
-
+            login(request, user)
+            return redirect('login')  
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
