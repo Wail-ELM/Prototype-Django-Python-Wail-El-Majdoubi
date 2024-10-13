@@ -1,8 +1,12 @@
+# views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from .models import Article
 from .forms import ArticleForm, CustomUserCreationForm
+
 
 def all_articles(request):  
     articles = Article.objects.all()
@@ -47,7 +51,7 @@ def delete_article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     if request.method == 'POST':
         article.delete()
-        return redirect('article_list')  
+        return redirect('all_articles')  # Redirection corrigée
     return render(request, 'blog/delete_article.html', {'article': article})
 
 def signup(request):
@@ -56,7 +60,11 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('login')  
+            return redirect('login')  # Redirection vers la page de connexion
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+class CustomLoginView(SuccessMessageMixin, LoginView):
+    template_name = 'registration/login.html'  
+    success_message = "You were successfully logged in."
