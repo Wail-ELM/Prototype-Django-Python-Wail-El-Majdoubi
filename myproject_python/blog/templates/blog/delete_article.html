@@ -3,11 +3,13 @@
 {% block title %}Delete Article{% endblock %}
 
 {% block content %}
-  <h1>Delete Article</h1>
-  <p>Are you sure you want to delete "{{ article.title }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, delete</button>
-    <a href="{% url 'article_detail' article.id %}" class="btn btn-secondary">Cancel</a>
-  </form>
+  <div class="container">
+    <h1>Delete Article</h1>
+    <p>Are you sure you want to delete "{{ article.title }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, delete</button>
+      <a href="{% url 'article_detail' article.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
 {% endblock %}

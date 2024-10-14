@@ -4,15 +4,19 @@
 
 {% block content %}
   <div class="container">
-    <h1>All Articles</h1>
+    <h1 class="mb-4 text-center">All Articles</h1>
     <ul class="list-group">
       {% for article in articles %}
-        <li class="list-group-item">
+        <li class="list-group-item mb-3 p-4 shadow-sm rounded">
           <h5 class="article-title">
-            <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+            <a href="{% url 'article_detail' article.id %}" class="text-dark font-weight-bold">{{ article.title }}</a>
           </h5>
-          <p class="mb-1">By {{ article.author }}</p>
-          <small class="text-muted">Created on {{ article.created_at }}</small>
+          <p class="mb-1 text-muted">By {{ article.author }}</p>
+          <small class="text-muted">Created on {{ article.created_at|date:"F j, Y" }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-center">
+          <p>No articles available at the moment. Check back later!</p>
         </li>
       {% endfor %}
     </ul>

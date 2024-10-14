@@ -1,29 +1,24 @@
-{% extends 'base.html' %} {% block title %}My Articles{% endblock %} 
+{% extends 'base.html' %}
+
+{% block title %}My Articles{% endblock %}
+
 {% block content %}
-<div class="container">
-  <h1>My Articles</h1>
-  <ul class="list-group">
-    {% for article in articles %}
-    <li class="list-group-item">
-      <h5 class="article-title">
-        <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
-      </h5>
-      <p class="mb-1">By {{ article.author }}</p>
-      <small class="text-muted">Created on {{ article.created_at }}</small>
-      <div class="mt-2">
-        <a
-          href="{% url 'edit_article' article.id %}"
-          class="btn btn-sm btn-primary"
-          >Edit</a
-        >
-        <a
-          href="{% url 'delete_article' article.id %}"
-          class="btn btn-sm btn-danger"
-          >Delete</a
-        >
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+  <div class="container">
+    <h1>My Articles</h1>
+    <ul class="list-group">
+      {% for article in articles %}
+      <li class="list-group-item">
+        <h5 class="article-title">
+          <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+        </h5>
+        <p class="mb-1">By {{ article.author }}</p>
+        <small class="text-muted">Created on {{ article.created_at }}</small>
+        <div class="mt-2">
+          <a href="{% url 'edit_article' article.id %}" class="btn btn-sm btn-primary">Edit</a>
+          <a href="{% url 'delete_article' article.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}
